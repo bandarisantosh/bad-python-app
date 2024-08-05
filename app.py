@@ -20,7 +20,6 @@ app.config['TEMP_UPLOAD_FOLDER'] = f"{get_root_dir()}/temp/uploads"
 app.config['PUBLIC_UPLOAD_FOLDER'] = f"{get_root_dir()}/static/uploads"
 app.config['PUBLIC_IMG_FOLDER'] = f"{get_root_dir()}/static/img"
 app.config['STATIC_BASE_URL'] = '/static'
-app.config['PUBLIC_UPLOADS_URL'] = f"{app.config['STATIC_BASE_URL']}/uploads"
 
 
 db_helper.initialize()
