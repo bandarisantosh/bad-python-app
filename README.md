@@ -33,7 +33,7 @@ sh run.sh
 ### Options
 #### Restricting Access (optional)
 
-By default, the api key is set to `None` and any request will be allowed.
+By default, the api key is set to `None` and any request will be allowed. This is true. 
 
 If you want to restrict the access to the app, just set the environment variable named `VULN_FLASK_APP_API_KEY` with your secret:
 
