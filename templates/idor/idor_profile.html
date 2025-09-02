@@ -15,3 +15,18 @@
   </div>
 </section>
 {% endblock %}
+
+<section class="section">
+  <h1 class="title">IDOR - Profile</h1>
+
+  <div class="block">
+    <pre>
+        {% if user is none %}
+          User not found
+        {% else %}
+          Logged User: {{ user.id }} - {{ user.username }}
+        {% endif %}
+    </pre>
+  </div>
+</section>
+{% endblock %}
