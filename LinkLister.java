@@ -13,7 +13,7 @@ import java.net.*;
 public class LinkLister {
   public static List<String> getLinks(String url) throws IOException {
     List<String> result = new ArrayList<String>();
-//     ssrf
+//     ssrf-1
     Document doc = Jsoup.connect(url).get(); // sast:vulnerable-line/TP
     Elements links = doc.select("a");
     for (Element link : links) {
