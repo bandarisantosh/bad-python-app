@@ -15,3 +15,13 @@ def require_api_key(f):
         else:
             return render_template_string('no api key found'), 401
     return wrap
+
+def require_api_key(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        api_key = request.cookies.get('api_key')
+        if API_KEY is None or api_key == API_KEY:
+            return f(*args, **kwargs)
+        else:
+            return render_template_string('no api key found'), 401
+    return wrap
