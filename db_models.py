@@ -8,7 +8,7 @@ class UserDbModel:
 
 class DbModels:
     def __init__(self):
-        self.UserDbModel = UserDbModel
+        self.UserDbModel = UserDbModel # this is a db model
 
 
 db_models = DbModels()
