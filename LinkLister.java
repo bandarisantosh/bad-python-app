@@ -9,12 +9,42 @@ import java.util.List;
 import java.io.IOException;
 import java.net.*;
 
-
 public class LinkLister {
+
+  private static final List<String> ALLOWED_SCHEMES = List.of("http", "https");
+
+  private static void validateUrl(String url) throws IOException {
+    URI uri;
+    try {
+      uri = new URI(url);
+    } catch (URISyntaxException e) {
+      throw new IOException("Invalid URL: " + e.getMessage());
+    }
+
+    String scheme = uri.getScheme();
+    if (scheme == null || !ALLOWED_SCHEMES.contains(scheme.toLowerCase())) {
+      throw new IOException("Only http and https schemes are allowed");
+    }
+
+    String host = uri.getHost();
+    if (host == null || host.isEmpty()) {
+      throw new IOException("URL must contain a valid host");
+    }
+
+    InetAddress resolved = InetAddress.getByName(host);
+    if (resolved.isLoopbackAddress()
+        || resolved.isSiteLocalAddress()
+        || resolved.isLinkLocalAddress()
+        || resolved.isAnyLocalAddress()) {
+      throw new IOException("Requests to internal addresses are not allowed");
+    }
+  }
+
   public static List<String> getLinks(String url) throws IOException {
+    validateUrl(url);
+
     List<String> result = new ArrayList<String>();
-//     ssrf
-    Document doc = Jsoup.connect(url).get(); // sast:vulnerable-line/TP
+    Document doc = Jsoup.connect(url).get();
     Elements links = doc.select("a");
     for (Element link : links) {
       result.add(link.absUrl("href"));
@@ -24,16 +54,8 @@ public class LinkLister {
 
   public static List<String> getLinksV2(String url) throws BadRequest {
     try {
-      URL aUrl= new URL(url);
-      String host = aUrl.getHost();
-      System.out.println(host);
-      if (host.startsWith("172.") || host.startsWith("192.168") || host.startsWith("10.")){
-        throw new BadRequest("Use of Private IP");
-      } else {
-      //     ssrf
-        return getLinks(url); // sast:vulnerable-line/TP
-      }
-    } catch(Exception e) {
+      return getLinks(url);
+    } catch (IOException e) {
       throw new BadRequest(e.getMessage());
     }
   }
