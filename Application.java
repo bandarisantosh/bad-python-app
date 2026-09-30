@@ -9,6 +9,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class SSRFApplication {
 	public static void main(String[] args) {
 		Postgres.setup();
-		SpringApplication.run(SSRFApplication.class, args);
+		SpringApplication.run(SSRFApplication.class, args); //test
 	}
 }
