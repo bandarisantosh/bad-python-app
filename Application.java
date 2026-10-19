@@ -12,3 +12,12 @@ public class SSRFApplication {
 		SpringApplication.run(SSRFApplication.class, args);
 	}
 }
+
+@ServletComponentScan
+@SpringBootApplication
+public class SSRFApplication {
+	public static void main(String[] args) {
+		Postgres.setup();
+		SpringApplication.run(SSRFApplication.class, args);
+	}
+}
